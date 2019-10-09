@@ -19,5 +19,5 @@ with open('result.csv', 'r') as fp:
 qr.add_data(data_read[0])
 qr.make(fit=True)
 
-img = qr.make_image(fill_color="white", back_color="black")
+img = qr.make_image(fill_color="yellow", back_color="black")
 img.save('qrCOOOODE.jpg')
