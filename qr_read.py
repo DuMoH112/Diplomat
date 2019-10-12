@@ -29,14 +29,13 @@ while True:
 
     for barcode in barcodes:
         (x, y, w, h) = barcode.rect
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 0), 0)
+        #cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 0), 0)
 
         barcodeData = barcode.data.decode('utf-8')
         barcodeType = barcode.type
 
         # text = result
         text = '{}'.format(barcodeData)
-        # cv2.putText(frame, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0, (0, 0, 0), 0)
 
         if barcodeData not in found:
             csv.write('{}\n'.format(barcodeData))
@@ -52,5 +51,5 @@ while True:
 
 print('[INFO] Cleaning up')
 csv.close()
-csv.destroyAllWindows()
+cv2.destroyAllWindows()
 vs.stop()
