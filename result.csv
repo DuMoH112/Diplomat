@@ -1,1 +1,1 @@
-[Decoded(data=b'http://www.visitkirov.ru/613/', type='QRCODE', rect=Rect(left=953, top=624, width=676, height=677), polygon=[Point(x=953, y=630), Point(x=958, y=1301), Point(x=1629, y=1289), Point(x=1618, y=624)])]
+[Decoded(data=b"'BEGIN:CARD', 'NAME: Evseev; Oksana; Vladimirovich;', 'TEL: None;', 'EMAIL: None;', 'COMPANY: None;', 'POSITION: None;', 'URL: None;', 'END:CARD'", type='QRCODE', rect=Rect(left=12, top=12, width=540, height=540), polygon=[Point(x=12, y=12), Point(x=16, y=551), Point(x=552, y=552), Point(x=551, y=16)])]
