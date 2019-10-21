@@ -1,5 +1,6 @@
 from pyzbar import pyzbar
 import cv2
+import argparse
 
 file = input('Укажите путь к файлу\n')
 

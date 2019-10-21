@@ -1,38 +1,23 @@
-import csv
 import qrcode
 import psycopg2
+from psycopg2 import sql
+from contextlib import closing
 
+userID = 0
 
 def dataInput():
-    vizitka['last_name'] = input('Введите фамилию: ')
-    vizitka['first_name'] = input('Введите имя: ')
-    vizitka['patronymic'] = input('Введите отчество: ')
-    vizitka['phone_number'] = input('Введите номер телефона(прим. +7-999-777-99-99): ')
-    vizitka['e_mail'] = input('Введите e-mail: ')
-    vizitka['company'] = input('Введите компанию: ')
-    vizitka['position'] = input('Введите должность: ')
-    vizitka['web_site'] = input('Введите веб-сайт: ')
+     vizitkaS['last_name'] = input('Введите фамилию: ')
+     vizitkaS['first_name'] = input('Введите имя: ')
+     vizitkaS['patronymic'] = input('Введите отчество: ')
+     vizitkaS['phone_number'] = input('Введите номер телефона(прим. +7-999-777-99-99): ')
+     vizitkaS['e_mail'] = input('Введите e-mail: ')
+     vizitkaS['company'] = input('Введите компанию: ')
+     vizitkaS['position'] = input('Введите должность: ')
+     vizitkaS['web_site'] = input('Введите веб-сайт: ')
 
 
-connect = psycopg2.connect(
-    database='Cards',
-    user='postgres',
-    password='09051945',
-    host='127.0.0.1',
-    port='5432'
-)
-
-cursor = connect.cursor()
-
-print("Database opened successfully")
-
-vizitka = {}
+vizitkaS = {}
 dataInput()
-
-cursor.execute(
-    "SELECT count(*) FROM cards;"
-    "insert into cards(id, last_name, first_name, patronymic, phone_number, e_mail, company, position, web_site), values(count, vizitka['last_name'], vizitka['first_name'], vizitka['patronymic'],  vizitka['phone_number'], vizitka['phone_number'], vizitka['e_mail'], vizitka['company'], vizitka['position'], vizitka['web_site']);"
-)
 
 qr = qrcode.QRCode(
     version=1,
@@ -41,19 +26,29 @@ qr = qrcode.QRCode(
     border=1
 )
 
-with open('result.csv', 'r') as fp:
-    reader = csv.reader(fp, delimiter=',', quotechar='"')
-    # next(reader, None)  # skip the headers
-    data_read = [row for row in reader]
+vizitka = []
+with closing(psycopg2.connect(
+        database='Cards',
+        user='postgres',
+        password='09051945',
+        host='127.0.0.1',
+        port='5432'
+)) as connect:
+    print("Database opened successfully")
+    with connect.cursor() as cursor:
+        connect.autocommit = True
 
-qr.add_data(data_read[0])
+        insert = sql.SQL('insert INTO cards (id, last_name, first_name, patronymic, number_phone,'
+                         ' e_mail, company, position, web_site) VALUES {}').format(sql.SQL(',').join())
+        data = cursor.fetchall()
+
+    print("Record inserted successfully")
+print("Database closed successfully")
+print(vizitka[0])
+
+
+qr.add_data(vizitka[0][6:-1:])
 qr.make(fit=True)
 
 img = qr.make_image(fill_color="black", back_color="white")
 img.save('img/qrCOOOODE.jpg')
-
-connect.commit()
-print("Record inserted successfully")
-
-connect.close()
-print("Database closed successfully")

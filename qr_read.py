@@ -20,7 +20,8 @@ time.sleep(2.0)
 csv = open(args["output"], "w")
 found = set()
 
-while True:
+x = True
+while x == True:
     # захват кадра из потокового видео и изменение его размера до 400px
     frame = vs.read()
     frame = imutils.resize(frame, width=400)
@@ -42,6 +43,7 @@ while True:
             csv.flush()
             found.clear()
             found.add(barcodeData)
+            x = False
 
     cv2.imshow('QR Code scaner', frame)
     key = cv2.waitKey(1) & 0xFF
