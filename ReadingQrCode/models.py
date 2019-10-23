@@ -11,7 +11,7 @@ class Card(models.Model):
     web_site = models.CharField(max_length=50)
 
     def __str__(self):
-        return self
+        return self.last_name
 
 
 
