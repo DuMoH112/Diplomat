@@ -5,12 +5,16 @@
         <title>Title</title>
     </head>
     <body>
-        <form action="" name="Добавьте картинку" method="post" enctype="multipart/form-data">
+        <form action="" name="AddImage" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <p>{{ form }}</p>
-{#            <p><input type="file" value="Выбрать файл" /></p>#}
-            <input type="submit" value="Отправить"/>
-            <p>{{ info }}</p>
+            <p><input type="file" name="file" value="Выбрать файл" /></p>
+            <input type="submit" name="csrfmiddlewaretoken" value="Отправить"/>
+            <p>{{ img }}</p>
+        </form>
+        <hr>
+        <form action="/ReadingQrCode/Sub/" name="submit" method="post">
+            {% csrf_token %}
+            <input type="submit" name="csrfmiddlewaretoken" value="CCCCC"/>
         </form>
     </body>
 </html>
