@@ -1,1 +1,0 @@
-[Decoded(data=b"'BEGIN:CARD', 'NAME: Evseev; Oksana; Vladimirovich;', 'TEL: None;', 'EMAIL: None;', 'COMPANY: None;', 'POSITION: None;', 'URL: None;', 'END:CARD'", type='QRCODE', rect=Rect(left=12, top=12, width=540, height=540), polygon=[Point(x=12, y=12), Point(x=16, y=551), Point(x=552, y=552), Point(x=551, y=16)])]

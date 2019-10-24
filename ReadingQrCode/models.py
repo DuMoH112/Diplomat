@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Card(models.Model):
     last_name = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
@@ -9,6 +10,7 @@ class Card(models.Model):
     company = models.CharField(max_length=50)
     position = models.CharField(max_length=50)
     web_site = models.CharField(max_length=50)
+    file = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.last_name

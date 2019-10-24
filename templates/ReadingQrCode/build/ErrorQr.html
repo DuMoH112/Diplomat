@@ -19,10 +19,8 @@
     <header class="header"><img class="header-burger" src="{% static 'images/burger.svg' %}" alt="burger"><img
             class="header-logo" src="{% static 'images/diplomat.svg' %}" alt="diplomat"></header>
     <section class="create">
-        <h2 class="create-title">Загрузите фотографию визитки</h2><img class="create-logo"
-                                                                       src="{% static 'images/create.png' %}"
-                                                                       alt="create">
-        <h1>{{ img }}</h1>
+        <h2 class="create-title">Загрузите фотографию визитки</h2>
+        <h1 class="create-text">{{ img }}</h1>
         <div class="create-button">
             <form action="load_photo/" name="LoadPhoto" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
