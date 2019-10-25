@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
 
-from .forms import ImageUploadForm, TextUploadForm
+from .forms import ImageUploadForm
 from .models import Card
 
 
@@ -121,9 +121,7 @@ def save(request, pk=2):
         card.save()
         return render(request, 'ReadingQrCode/build/my-cart.html')
     else:
-        form = TextUploadForm()
-    return HttpResponse(request, 'ReadingQrCode/build/edit.html', {'form': form})
-    # form = TextUploadForm(requset.POST)
+        return render(request, 'ReadingQrCode/build/edit.html')
 
 
 def index(request):
