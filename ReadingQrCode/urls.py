@@ -1,10 +1,15 @@
 from django.conf.urls import url
 
-from . import views
-from django.urls import path
+from ReadingQrCode.views import *
+from django.urls import path, re_path
 
 urlpatterns = [
-    url(r'load_photo/', views.input_file, name='LoadPhoto'),
-    url(r'contact/', views.contact, name='ReviewContact'),
-    url(r'', views.index),
+    url(r'save/', save, name='SaveData'),
+    url(r'edit/', edit, name='EditMyCard'),
+    url(r'card/(?P<pk>[0-9]+)/', card, name='ViewCard'),
+    url(r'scanned_code/', input_file, name='LoadPhoto'),
+    url(r'my-card/', my_cart, name='MyCard'),
+    url(r'catalog/', catalog, name='Catalog'),
+    url(r'scan/', scan, name='Scan'),
+    url(r'', index, name='Menu'),
 ]

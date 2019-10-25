@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="ru-RU">
+<head>
+    <meta charset="utf-8">
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE = edge"><![endif]-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="keywords" content="">
+    <title>{{ barcode.first_name }} {{ barcode.last_name }}</title><!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <img class="header-burger" src="{% static 'images/burger.svg' %}" alt="burger">
+        <a class="button-menu" aria-label="В меню" href="/' %}">
+            <img class="header-logo" src="{% static 'images/diplomat.svg' %}" alt="diplomat">
+        </a>
+    </header>
+    <section class="my">
+        <div class="my-top">
+            <h2 class="title">Отсканированная визитка</h2>
+            <input class="button-add-card" type="submit">
+        </div>
+    </section>
+    <section class="about">
+        <div class="about-block">
+            <div class="about-block-item">
+                <span class="about-block-label">ФИО</span>
+                <span class="about-block-info">{{ barcode.last_name }} {{ barcode.first_name }} {{ barcode.patronymic }}</span>
+            </div>
+            <div class="about-block-item">
+                <span class="about-block-label">Телефон</span>
+                <span class="about-block-info">+{{ barcode.number_phone }}</span>
+            </div>
+            {% if barcode.e_mail %}
+            <div class="about-block-item">
+                <span class="about-block-label">email</span>
+                <span class="about-block-info">{{ barcode.e_mail }}</span>
+            </div>
+            {% endif %}
+            {% if barcode.address %}
+            <div class="about-block-item">
+                <span class="about-block-label">адрес</span>
+                <span class="about-block-info">{{ barcode.address }}</span>
+            </div>
+            {% endif %}
+            {% if barcode.company %}
+            <div class="about-block-item">
+                <span class="about-block-label">компания</span>
+                <span class="about-block-info">{{ barcode.company }}</span>
+            </div>
+            {% endif %}
+            {% if barcode.position %}
+            <div class="about-block-item">
+                <span class="about-block-label">должность</span>
+                <span class="about-block-info">{{ barcode.position }}</span>
+            </div>
+            {% endif %}
+            {% if barcode.web_site %}
+                <div class="about-block-item">
+                    <span class="about-block-label">сайт</span>
+                    <span class="about-block-info">{{ barcode.web_site }}</span>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+</body>
+</html>

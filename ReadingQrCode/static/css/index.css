@@ -33,7 +33,14 @@
 .create-button {
     position: absolute;
     bottom: 20px;
-    width: 90%
+    width: 90%;
+}
+
+.create-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
 }
 
 .my {
@@ -108,6 +115,18 @@
     padding: 10px 0;
 }
 
+.button-add-card {
+    width: 100%;
+    background: #2f80ed;
+    border-radius: 5px;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 15px;
+    color: #fff;
+    margin-top: 2px;
+    padding: 10px 0;
+}
+
 .button-load-file {
     width: 100%;
     background: #2f80ed;
@@ -120,4 +139,36 @@
     background-image: url(../images/camera.svg);
     background-repeat: no-repeat;
     background-position: 98% center;
+}
+
+.button-menu-item {
+    width: 100%;
+    background: #2f80ed;
+    opacity: 50%;
+    border-radius: 5px;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 15px;
+    color: white;
+    padding: 10px 0;
+    text-align: left;
+    padding-left: 2%;
+    margin-top: 5px;
+}
+
+.edit {
+    border-radius: 5px;
+    width: 90%;
+    padding-left: 5px;
+    margin-left: 1%;
+    margin-top: 2px;
+}
+
+.button-menu {
+
+}
+
+.qr_code {
+    border-radius: 5px;
+    width: 80px;
 }

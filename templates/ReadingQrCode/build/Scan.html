@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE = edge"><![endif]-->
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="keywords" content="">
-    <title>Дипломат</title><!--[if lt IE 9]>
+    <title>Сканировать визитку</title><!--[if lt IE 9]>
     <script href="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -16,15 +16,21 @@
 </head>
 <body>
 <div class="wrapper">
-    <header class="header"><img class="header-burger" src="{% static 'images/burger.svg' %}" alt="burger"><img
-            class="header-logo" src="{% static 'images/diplomat.svg' %}" alt="diplomat"></header>
+    <header class="header">
+        <img class="header-burger" src="{% static 'images/burger.svg' %}" alt="burger">
+        <a class="button-menu" aria-label="В меню" href="/' %}">
+            <img class="header-logo" src="{% static 'images/diplomat.svg' %}" alt="diplomat">
+        </a>
+    </header>
     <section class="create">
-        <h2 class="create-title">Загрузите фотографию визитки</h2><img class="create-logo"
-                                                                       src="{% static 'images/create.png' %}"
-                                                                       alt="create">
-        <h1>{{ img }}</h1>
+        <h2 class="create-title">Загрузите фотографию визитки</h2>
+        {% if req %}
+            <h1>{{ req }}</h1>
+        {% else %}
+            <img class="create-logo" src="{% static 'images/create.png' %}" alt="create">
+        {% endif %}
         <div class="create-button">
-            <form action="load_photo/" name="LoadPhoto" method="post" enctype="multipart/form-data">
+            <form action="scanned_code/" name="LoadPhoto" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input class="button-load-file" type="file" name="button-load-file" title="Загрузить фото"
                        value="Загрузить">
