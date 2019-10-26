@@ -30,7 +30,6 @@ def input_file(request):
                     'position': barcode[barcode.find('position')+12:barcode.find('web_site')-4],
                     'web_site': barcode[barcode.find('web_site')+12:barcode.find('END')-4],
                 }
-                print(barcode_str)
                 return render(request, 'ReadingQrCode/build/add_cart.html', {'barcode': barcode_str})
             else:
                 context = 'Qr код не читается, попробуйте снова'
@@ -66,6 +65,8 @@ def save(request, pk=2):
                     barcode[key] = request.POST[key]
             except:
                 pass
+        if barcode['number_phone'][0] == '8':
+            barcode['number_phone'] = '7' + barcode['number_phone'][1:]
         img = create_qr_code(barcode)
         card = Card.objects.get(pk=pk)
         card.last_name = barcode['last_name']
@@ -79,7 +80,7 @@ def save(request, pk=2):
         card.web_site = barcode['web_site']
         # card.file = img
         card.save()
-        return render(request, 'ReadingQrCode/build/my-cart.html', {'card': card})
+        return my_cart(request)
     else:
         return render(request, 'ReadingQrCode/build/edit.html')
 
@@ -125,7 +126,7 @@ def add_card(request):
     card.web_site = request.POST['web_site']
     card.save()
     card = Card.objects.all()
-    return render(request, 'ReadingQrCode/build/menu.html')
+    return catalog(request)
 
 def del_card(request):
     card = Card.objects.get(pk=request.POST['pk'])
