@@ -1,51 +1,12 @@
-import os
-
-import cv2
-import numpy as np
-import qrcode
-from PIL import Image
-from pyzbar import pyzbar
-
 from django.views.decorators.csrf import csrf_protect
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from .forms import ImageUploadForm
 from .models import Card
+from .actions_with_qr import *
 
 
-def create_qr_code(barcode):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=12,
-        border=1
-    )
-
-
-    qr.add_data(barcode)
-    qr.make(fit=True)
-    path = 'ReadingQrCode/static/img_qr/my_qr.jpg'
-    img = qr.make_image(fill_color="black", back_color="white")
-    img.save(path)
-    return path
-
-
-def decode_qr_code(file):
-    pic = Image.open(file)
-    pic = pic.convert("L")
-    pic = np.asarray(pic)
-    pix = Image.fromarray(pic)
-    pix.save('ReadingQrCode/static/images/tmp.jpeg')
-    img = cv2.imread('ReadingQrCode/static/images/tmp.jpeg')
-
-    inverted = cv2.inRange(img, (0, 0, 0), (200, 200, 255))
-    if pyzbar.decode(inverted) == []:
-        inverted = 255 - cv2.cvtColor(inverted, cv2.COLOR_GRAY2BGR)
-    barcode = pyzbar.decode(inverted)
-
-    os.remove("ReadingQrCode/static/images/tmp.jpeg")
-    return barcode[0].data
 
 @csrf_protect
 def input_file(request):
@@ -69,15 +30,14 @@ def input_file(request):
                     'position': barcode[barcode.find('position')+12:barcode.find('web_site')-4],
                     'web_site': barcode[barcode.find('web_site')+12:barcode.find('END')-4],
                 }
-
-                return render(request, 'ReadingQrCode/build/add_cart.html', {'barcode': barcode_str, 'q':barcode})
+                print(barcode_str)
+                return render(request, 'ReadingQrCode/build/add_cart.html', {'barcode': barcode_str})
             else:
                 context = 'Qr код не читается, попробуйте снова'
                 return render(request, 'ReadingQrCode/build/Scan.html', {'req': context})
         else:
             context = 'Qr код не читается, попробуйте снова'
             return render(request, 'ReadingQrCode/build/Scan.html', {'req': context})
-        # return HttpResponseRedirect('ReadingQrCode/build/Scan.html', {'img': barcode})
     else:
         form = ImageUploadForm()
     return render(request, 'ReadingQrCode/build/Scan.html', {'img': form})
@@ -108,18 +68,18 @@ def save(request, pk=2):
                 pass
         img = create_qr_code(barcode)
         card = Card.objects.get(pk=pk)
-        card.last_name = barcode['last_name'],
-        card.first_name = barcode['first_name'],
-        card.patronymic = barcode['patronymic'],
-        card.number_phone = barcode['number_phone'],
-        card.e_mail = barcode['e_mail'],
-        card.address = barcode['address'],
-        card.company = barcode['company'],
-        card.position = barcode['position'],
-        card.web_site = barcode['web_site'],
-        card.file = img,
+        card.last_name = barcode['last_name']
+        card.first_name = barcode['first_name']
+        card.patronymic = barcode['patronymic']
+        card.number_phone = barcode['number_phone']
+        card.e_mail = barcode['e_mail']
+        card.address = barcode['address']
+        card.company = barcode['company']
+        card.position = barcode['position']
+        card.web_site = barcode['web_site']
+        # card.file = img
         card.save()
-        return render(request, 'ReadingQrCode/build/my-cart.html')
+        return render(request, 'ReadingQrCode/build/my-cart.html', {'card': card})
     else:
         return render(request, 'ReadingQrCode/build/edit.html')
 
@@ -150,3 +110,25 @@ def edit(request):
 def card(request, pk=2):
     card = Card.objects.get(pk=pk)
     return render(request, 'ReadingQrCode/build/cart.html', {'card': card})
+
+def add_card(request):
+    card = Card()
+    card.pk = Card.objects.count() + 2
+    card.last_name = request.POST['last_name']
+    card.first_name = request.POST['first_name']
+    card.patronymic = request.POST['patronymic']
+    card.number_phone = request.POST['number_phone']
+    card.e_mail = request.POST['e_mail']
+    card.address = request.POST['address']
+    card.company = request.POST['company']
+    card.position = request.POST['position']
+    card.web_site = request.POST['web_site']
+    card.save()
+    card = Card.objects.all()
+    return render(request, 'ReadingQrCode/build/menu.html')
+
+def del_card(request):
+    card = Card.objects.get(pk=request.POST['pk'])
+    card.delete()
+    card = Card.objects.all()
+    return render(request, 'ReadingQrCode/build/contacts.html', {'card': card})

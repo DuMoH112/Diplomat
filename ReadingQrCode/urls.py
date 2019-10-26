@@ -5,7 +5,9 @@ from django.urls import path, re_path
 
 urlpatterns = [
     url(r'save/', save, name='SaveData'),
+    url(r'del/', del_card, name='DelData'),
     url(r'edit/', edit, name='EditMyCard'),
+    url(r'add-card', add_card, name='AddNewCard'),
     url(r'card/(?P<pk>[0-9]+)/', card, name='ViewCard'),
     url(r'scanned_code/', input_file, name='LoadPhoto'),
     url(r'my-card/', my_cart, name='MyCard'),

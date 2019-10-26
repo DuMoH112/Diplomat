@@ -64,6 +64,11 @@
                 </div>
             {% endif %}
         </div>
+        <form action="del/" method="post" name="DelCard">
+            {% csrf_token %}
+            <input type="hidden" value="{{ card.pk }}" name="pk">
+            <input class="button-del-card" type="submit" value="Удалить">
+        </form>
     </section>
 </div>
 </body>

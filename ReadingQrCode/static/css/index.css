@@ -127,6 +127,18 @@
     padding: 10px 0;
 }
 
+.button-del-card {
+    width: 100%;
+    background: #ed2f3c;
+    border-radius: 5px;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 15px;
+    color: #fff;
+    margin-top: 2px;
+    padding: 10px 0;
+}
+
 .button-load-file {
     width: 100%;
     background: #2f80ed;

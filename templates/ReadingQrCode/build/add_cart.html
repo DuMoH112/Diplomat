@@ -25,7 +25,6 @@
     <section class="my">
         <div class="my-top">
             <h2 class="title">Отсканированная визитка</h2>
-            <input class="button-add-card" type="submit">
         </div>
     </section>
     <section class="about">
@@ -69,6 +68,24 @@
                 </div>
             {% endif %}
         </div>
+        <form action="add-card/" method="post" name="AddCard">
+            {% csrf_token %}
+            <input type="hidden" name="last_name"    value="{{ barcode.last_name }}">
+            <input type="hidden" name="first_name"   value="{{ barcode.first_name }}">
+            <input type="hidden" name="patronymic"   value="{{ barcode.patronymic }}">
+            <input type="hidden" name="number_phone" value="{{ barcode.number_phone }}">
+            <input type="hidden" name="e_mail"       value="{{ barcode.e_mail }}">
+            <input type="hidden" name="address"      value="{{ barcode.address }}">
+            <input type="hidden" name="company"      value="{{ barcode.company }}">
+            <input type="hidden" name="position"     value="{{ barcode.position }}">
+            <input type="hidden" name="web_site"     value="{{ barcode.web_site }}">
+            <input class="button-add-card" type="submit" value="Сохранить">
+        </form>
+
+        <form action="catalog/" method="post" name="AddCard">
+            {% csrf_token %}
+            <input class="button-add-card" type="submit" value="Вернуться в назад">
+        </form>
     </section>
 </div>
 </body>
